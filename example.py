@@ -1,14 +1,21 @@
-def say_hello(name, age):
-  print(f"hello {name}, you are a {age} years old")
-  
-def say_bye():
-  print("bye bye")
+#! calculator
+def plus(a = 0, b = 0):
+  print(a + b)
 
-x = True
-while x:
-  username = input("enter your name(input 'exit' is go out):")
-  age = input("enter your age")
-  if username == 'exit':
-    x = False
-  else:
-    say_hello(username, age)
+def minus(a = 0, b = 0):
+  print(a - b)
+
+def multiply(a = 1, b = 1):
+  print(round(a * b, 2))
+
+def divide(a = 1, b = 1):
+  print(f"{a / b:.2f}")
+
+def power_of(a = 1, b = 1):
+  print(a ** b)
+
+plus(1)
+minus(1, 2)
+multiply(10.12333, 3)
+divide(13, 7)
+power_of(2, 3)
