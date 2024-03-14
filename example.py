@@ -13,4 +13,4 @@ def get_tax_amount (profit):
     return profit * 0.15
 def apply_tax_credits (tax_amount, tax_credits):
 #tax_amount (세금 금액), tax_credits (세액 공제율)를 인수로 받고, amount to discount (할인할 금액)를 리턴.
-  return tax_amount - (tax_amount * tax_credits)
+  return tax_amount * tax_credits
