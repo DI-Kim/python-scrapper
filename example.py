@@ -1,19 +1,21 @@
-from random import randint
-
-print("welcom to Python Casino!")
-
-pc_choice = randint(1, 100)
-
 playing = True
 
 while playing:
-  user_choice = int(input('choose your number (1 - 100):'))
+  first_number = int(input("Choose a number:\n"))
+  second_number = int(input("Choose another one:\n"))
 
-  if user_choice == pc_choice:
+  selected_operation = input('''Choose an operation
+        Options are: +, -, * or /.
+        Write 'exit' to finish.
+''')
+
+  if selected_operation == 'exit':
     playing = False
-    print('You won!')
-  elif user_choice > pc_choice:
-    print('Lower!')
-  elif user_choice < pc_choice:
-    print('Higher!')
-    
+  elif selected_operation == '+':
+    print(f'Result: {first_number + second_number}')
+  elif selected_operation == '-':
+    print(f'Result: {first_number - second_number}')
+  elif selected_operation == '*':
+    print(f'Result: {first_number * second_number}')
+  elif selected_operation == '/':
+    print(f'Result: {first_number / second_number}')
