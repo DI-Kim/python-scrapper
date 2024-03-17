@@ -1,21 +1,22 @@
-playing = True
+from requests import get
 
-while playing:
-  first_number = int(input("Choose a number:\n"))
-  second_number = int(input("Choose another one:\n"))
+websites = [
+  "https://google.com",
+  "airbnb.com",
+  "https://twitter.com",
+  "facebook.com",
+  "tiktok.com"
+]
 
-  selected_operation = input('''Choose an operation
-        Options are: +, -, * or /.
-        Write 'exit' to finish.
-''')
+results = {}
 
-  if selected_operation == 'exit':
-    playing = False
-  elif selected_operation == '+':
-    print(f'Result: {first_number + second_number}')
-  elif selected_operation == '-':
-    print(f'Result: {first_number - second_number}')
-  elif selected_operation == '*':
-    print(f'Result: {first_number * second_number}')
-  elif selected_operation == '/':
-    print(f'Result: {first_number / second_number}')
+for website in websites:
+  if not website.startswith("https://"):
+    website = f"https://{website}"
+  response = get(website)
+  if response.status_code == 200:
+    results[website] = "OK"
+  else:
+    results[website] = "FAILED"
+
+print(results)
