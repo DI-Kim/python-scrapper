@@ -1,22 +1,33 @@
-from requests import get
+class Dog:
+  def __init__(self, name, breed, age):
+    self.name = name
+    self.age = age
+    self.breed = breed
 
-websites = [
-  "https://google.com",
-  "airbnb.com",
-  "https://twitter.com",
-  "facebook.com",
-  "tiktok.com"
-]
+  def __str__(self):
+    return f"{self.breed} dog named {self.name}"
 
-results = {}
+class GuardDog(Dog):
+  def __init__(self, name, breed):
+    super().__init__(name, breed, 5)
 
-for website in websites:
-  if not website.startswith("https://"):
-    website = f"https://{website}"
-  response = get(website)
-  if response.status_code == 200:
-    results[website] = "OK"
-  else:
-    results[website] = "FAILED"
+  def rrrr(self):
+    print("stay away!")
 
-print(results)
+class Puppy(Dog):
+  def __init__(self, name, breed):
+    super().__init__(name, breed, 0.1)
+
+  def woof_woof(self):
+    print("Woof Woof~")
+
+  
+  
+  
+ruffus = Puppy(name='Ruffus', breed='Beagle')
+bibi = GuardDog(name='Bibi', breed='Dalmatian')
+
+print(ruffus, bibi)
+
+ruffus.woof_woof()
+bibi.rrrr()
