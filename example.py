@@ -1,33 +1,50 @@
-class Dog:
-  def __init__(self, name, breed, age):
-    self.name = name
-    self.age = age
-    self.breed = breed
+import requests
 
-  def __str__(self):
-    return f"{self.breed} dog named {self.name}"
+from bs4 import BeautifulSoup
 
-class GuardDog(Dog):
-  def __init__(self, name, breed):
-    super().__init__(name, breed, 5)
+all_jobs  = []
 
-  def rrrr(self):
-    print("stay away!")
+def scrape_page(url):
+  print(f'scraping {url}...')
+  response = requests.get(url)
 
-class Puppy(Dog):
-  def __init__(self, name, breed):
-    super().__init__(name, breed, 0.1)
+  soup = BeautifulSoup(response.content, "html.parser")
 
-  def woof_woof(self):
-    print("Woof Woof~")
+  jobs = soup.find("section", class_="jobs").find_all("li")[1:-1]
 
-  
-  
-  
-ruffus = Puppy(name='Ruffus', breed='Beagle')
-bibi = GuardDog(name='Bibi', breed='Dalmatian')
+  for job in jobs:
+    title = job.find("span", class_='title')
+    company, position, region = job.find_all('span', class_='company')
+    url = job.find('div', class_='tooltip--flag-logo').next_sibling['href']
 
-print(ruffus, bibi)
+    job_data = {
+      "title": title.text,
+      "company": company.text,
+      "position": position.text,
+      "region": region.text,
+      'url': f'https://weworkremotely.com{url}'
+    }
+    all_jobs.append(job_data)
 
-ruffus.woof_woof()
-bibi.rrrr()
+def get_pages(url):
+  response = requests.get(url, headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"})
+
+  soup = BeautifulSoup(response.content, 'html.parser')
+
+  # return page numbers of url
+  return len(soup.find('div', class_='pagination').find_all('span', class_='page'))
+
+
+
+# url = "https://weworkremotely.com/categories/remote-full-stack-programming-jobs"
+# scrape_page(url)
+
+url = "https://weworkremotely.com/remote-full-time-jobs?page=1"    
+
+total_pages = get_pages(url)
+
+for x in range(total_pages):
+  url = f"https://weworkremotely.com/remote-full-time-jobs?page={x+1}"
+  scrape_page(url)
+
+print(len(all_jobs))
