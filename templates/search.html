@@ -17,7 +17,7 @@
               <th>Link</th>
               <th>Title</th>
               <th>Company</th>
-              <th>Skills</th>
+              <th>Tags</th>
 
               <!-- location -->
             </tr>
@@ -28,7 +28,11 @@
               <td><a href="{{job.link}}" target="_blank">Apply</a></td>
               <td>{{job.title}}</td>
               <td>{{job.company}}</td>
-              <td>{{job.skills}}</td>
+              <td>
+                {% for tag in job.tags %}
+                <span>{{tag}}&nbsp;&nbsp;<span style="color: #0a608f">|</span>&nbsp;&nbsp;</span>
+                {% endfor %}
+              </td>
             </tr>
             {% endfor %}
           </tbody>
