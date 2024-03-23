@@ -65,5 +65,5 @@ for skill in skills:
   scrape_page(url)
 
 print(len(all_jobs))
-
+print(all_jobs[0])
 
