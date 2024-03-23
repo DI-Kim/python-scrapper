@@ -49,5 +49,3 @@ def scrape_page(url):
 def extractor_web3(keyword):
   url = f'https://web3.career/{keyword}-jobs'
   return scrape_page(url)
-
-extractor_web3('python')

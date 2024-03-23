@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from berlin import extractor_berlin
 from web3 import extractor_web3
+from wwr import extractor_wwr
 
 app = Flask(__name__)
 
@@ -20,7 +21,8 @@ def search():
   else:
     berlin = extractor_berlin(keyword)
     web3 = extractor_web3(keyword)
-    jobs = berlin + web3
+    wwr = extractor_wwr(keyword)
+    jobs = berlin + web3 + wwr
     db[keyword] = jobs
   return render_template('search.html', keyword=keyword, jobs=jobs)
 
