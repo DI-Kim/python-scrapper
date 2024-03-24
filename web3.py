@@ -18,30 +18,31 @@ def scrape_page(url):
   )
   soup = BeautifulSoup(response.content, 'html.parser')
   jobs_all = soup.find('tbody', class_='tbody')
-  for _ in jobs_all:
-    if jobs_all.find('tr', class_='border-paid-table') is None:
-      break
-    jobs_all.find('tr', class_='border-paid-table').decompose()
-  jobs = jobs_all.find_all('tr', class_='table_row')
-  
+  if jobs_all:
+    for _ in jobs_all:
+      if jobs_all.find('tr', class_='border-paid-table') is None:
+        break
+      jobs_all.find('tr', class_='border-paid-table').decompose()
+    jobs = jobs_all.find_all('tr', class_='table_row')
+    
 
-  for job in jobs:
-    company = job.find('td', class_='job-location-mobile').find('h3')
-    title = job.find('div', class_='job-title-mobile').find('h2')
-    link = job.find('td', class_='job-location-mobile').find('a')['href']
-    tags = []
-    tags_html = job.find_all('span', class_='my-badge')
-    for tag in tags_html:
-      tags.append(tag.text.strip())
+    for job in jobs:
+      company = job.find('td', class_='job-location-mobile').find('h3')
+      title = job.find('div', class_='job-title-mobile').find('h2')
+      link = job.find('td', class_='job-location-mobile').find('a')['href']
+      tags = []
+      tags_html = job.find_all('span', class_='my-badge')
+      for tag in tags_html:
+        tags.append(tag.text.strip())
 
-    job_data = {
-      'company': company.text,
-      'title': title.text,
-      'link': f'https://web3.career{link}',
-      'tags': tags,
-    }
+      job_data = {
+        'company': company.text,
+        'title': title.text,
+        'link': f'https://web3.career{link}',
+        'tags': tags,
+      }
 
-    all_jobs.append(job_data)
+      all_jobs.append(job_data)
   print('finished...✅')
   return all_jobs
 

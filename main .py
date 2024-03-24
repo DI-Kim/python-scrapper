@@ -23,6 +23,7 @@ def search():
     web3 = extractor_web3(keyword)
     wwr = extractor_wwr(keyword)
     jobs = berlin + web3 + wwr
+    
     db[keyword] = jobs
   return render_template('search.html', keyword=keyword, jobs=jobs)
 

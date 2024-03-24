@@ -12,24 +12,26 @@ def scrape_page(url):
     }
   )
   soup = BeautifulSoup(response.content, 'html.parser')
-  jobs = soup.find('ul', class_='jobs-list-items').find_all('li', class_='bjs-jlid')
+  if soup.find('ul', class_='jobs-list-items'):
+    jobs = soup.find('ul', class_='jobs-list-items').find_all('li', class_='bjs-jlid')
+  
 
-  for job in jobs:
-    company = job.find('a', class_='bjs-jlid__b')
-    link_html = job.find('h4', class_='bjs-jlid__h').find('a')
-    tags = []
-    tags_html = job.find('div', class_='links-box').find_all('a')
-    for tag in tags_html:
-      tags.append(tag.text.strip())
+    for job in jobs:
+      company = job.find('a', class_='bjs-jlid__b')
+      link_html = job.find('h4', class_='bjs-jlid__h').find('a')
+      tags = []
+      tags_html = job.find('div', class_='links-box').find_all('a')
+      for tag in tags_html:
+        tags.append(tag.text.strip())
 
-    job_data = {
-      'company': company.text,
-      'title': link_html.text,
-      'link': link_html['href'],
-      'tags': tags,
-    }
+      job_data = {
+        'company': company.text,
+        'title': link_html.text,
+        'link': link_html['href'],
+        'tags': tags,
+      }
 
-    all_jobs.append(job_data)
+      all_jobs.append(job_data)
   # print(type(tags))
   print('finished...✅')
   return all_jobs
